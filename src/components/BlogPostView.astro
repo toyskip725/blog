@@ -1,0 +1,58 @@
+---
+// @ts-nocheck
+import { BlogPostTag } from "./BlogPostTag";
+
+const { frontmatter, entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<div class="header">
+  <p class="info">{frontmatter.publishedAt.toDateString()}</p>
+  <h1 class="title">
+    <a href={`post/${entry.slug}`}>{frontmatter.title}</a>
+  </h1>
+  <ul class="tag-container">
+  {frontmatter.tags.map((tag: any) => {
+      const tagName = tag as string;
+      return (<BlogPostTag tagName={tagName} />);
+    })}
+  </ul>
+</div>
+<div class="content">
+  <Content />
+</div>
+
+<style>
+  .header {
+    padding: 40px 10px 10px 10px;
+  }
+  .title {
+    font-size: xx-large;
+    font-weight: normal;
+    color: #2a2a31;
+    margin-top: 0em;
+    margin-bottom: 0em;
+  }
+  .title a {
+    color: #2a2a31;
+    text-decoration: none;
+  }
+  .info {
+    color: #2a2a31;
+    margin: 0.5em 0em;
+  }
+  .tag-container {
+    padding-left: 0em;
+    display: flex;
+  }
+  .content {
+    color: #2a2a31;
+    padding: 10px;
+
+    h1 {
+      font-size: x-large;
+      font-weight: normal;
+      padding-top: 1em;
+    }
+  }
+</style>
