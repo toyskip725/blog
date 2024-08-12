@@ -1,15 +1,46 @@
 ---
-import { TopNavigation } from "../components/TopNavigation"
-import Layout from "../layouts/BaseLayout.astro"
+// @ts-nocheck
+import { getCollection } from 'astro:content';
+import BlogPostView from "../components/BlogPostView.astro";
+import { TopNavigation } from "../components/TopNavigation";
+import { BlogPostCard } from "../components/BlogPostCard";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const collection = await getCollection('post');
+const posts = collection.reverse();
 ---
 
-<Layout title="sumi blog">
+<BaseLayout title="sumi blog">
   <TopNavigation />
-  <main>
-    <h1>ようこそ！</h1>
-  </main>
-</Layout>
+  <div class="wrapper">
+    <main>
+      {posts.map((post) => (<BlogPostView frontmatter={post.data} entry={post} />))}
+    </main>
+    <aside>
+      <h1>タグ一覧</h1>
+      <h1>最新記事</h1>
+      {posts.map((post) => (<BlogPostCard href={`post/${post.slug}`} frontmatter={post.data} />))}
+    </aside>
+  </div>
+</BaseLayout>
 
 <style>
+main {
+  width: 70%;
+  padding: 1em 1em 1em 0em;
+}
+aside {
+  width: 30%;
+  padding: 1em;
+}
 
+h1 {
+  color: #2a2a31;
+  font-size: x-large;
+  font-weight: normal;
+}
+
+.wrapper {
+  display: flex;
+}
 </style>
