@@ -1,0 +1,74 @@
+---
+// @ts-nocheck
+import { BlogPostTag } from "./BlogPostTag";
+import { MainColorDivider } from "./MainColorDivider";
+import { DateUtility } from "../utils/dateutil";
+
+const { frontmatter, entry } = Astro.props;
+const { Content } = await entry.render();
+
+const isInPostPage = Astro.url.pathname.includes("post")
+---
+
+<div class="header">
+  <p class="info">{DateUtility.format(frontmatter.publishedAt)}</p>
+  {isInPostPage ? (
+    <h1 class="title">{frontmatter.title}</h1>
+  ) : (
+    <h1 class="title">
+      <a href={`post/${entry.slug}`}>{frontmatter.title}</a>
+    </h1>
+  )}
+  <ul class="tag-container">
+  {frontmatter.tags.map((tag: any) => {
+      const tagName = tag as string;
+      return (<BlogPostTag tagName={tagName} />);
+    })}
+  </ul>
+</div>
+{isInPostPage && (
+  <div class="divider">
+    <MainColorDivider />
+  </div>
+)}
+<div class="content">
+  <Content />
+</div>
+
+<style>
+  .header {
+    padding: 20px 10px 10px 10px;
+  }
+  .divider {
+    padding-left: 10px;
+  }
+  .title {
+    font-size: xx-large;
+    font-weight: normal;
+    color: #34343d;
+    margin-top: 0em;
+    margin-bottom: 0em;
+  }
+  .title a {
+    color: #34343d;
+    text-decoration: none;
+  }
+  .info {
+    color: #34343d;
+    margin: 0.5em 0em;
+  }
+  .tag-container {
+    padding-left: 0em;
+    display: flex;
+  }
+  .content {
+    color: #34343d;
+    padding: 10px;
+
+    h1 {
+      font-size: x-large;
+      font-weight: normal;
+      padding-top: 1em;
+    }
+  }
+</style>

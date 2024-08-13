@@ -5,11 +5,11 @@ import {customElement, property} from 'lit/decorators.js';
 export class TopNavigation extends LitElement {
   static styles = css`
     header {
-      padding: 20px 10px 0px 10px;
+      padding: 20px 10px 20px 10px;
     }
     
     a {
-      color: #000;
+      color: #34343d;
       text-decoration: none;
     }
   `;

@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPostView from '../../components/BlogPostView.astro';
+import { TopNavigation } from '../../components/TopNavigation';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("post");
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const title = `${entry.data.title} | sumi blog`;
+---
+
+<BaseLayout title={title}>
+  <TopNavigation />
+  <main>
+    <BlogPostView frontmatter={entry.data} entry={entry} />
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    width: 70%;
+    min-width: 640px;
+    padding: 1em 1em 1em 0em;
+  }
+
+  @media screen and (max-width: 640px) {
+    main {
+      width: auto;
+      min-width: 0px;
+    }
+  }
+</style>
