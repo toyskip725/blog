@@ -11,9 +11,15 @@ export class BlogPostTag extends LitElement {
     }
     span {
       color: #2a2a31;
-      font-size: small;
+      font-size: 0.875rem;
       display: inline-flex;
       padding: 0.25em 0.75em;
+    }
+    
+    @media screen and (max-width: 640px) {
+      span {
+        font-size: 0.75rem;
+      }
     }
   `;
 
