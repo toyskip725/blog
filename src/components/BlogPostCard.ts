@@ -1,5 +1,6 @@
 import {LitElement, css, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
+import { DateUtility } from '../utils/dateutil';
 
 interface FrontMatter {
   title: string;
@@ -38,7 +39,7 @@ export class BlogPostCard extends LitElement {
 
     return html`
       <div class="container">
-        <p class="published-at">${this.frontmatter.publishedAt.toDateString()}</p>
+        <p class="published-at">${DateUtility.format(this.frontmatter.publishedAt)}</p>
         <p class="title">
           <a href=${this.href}>${this.frontmatter.title}</a>
         </p>

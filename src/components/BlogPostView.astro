@@ -2,6 +2,7 @@
 // @ts-nocheck
 import { BlogPostTag } from "./BlogPostTag";
 import { MainColorDivider } from "./MainColorDivider";
+import { DateUtility } from "../utils/dateutil";
 
 const { frontmatter, entry } = Astro.props;
 const { Content } = await entry.render();
@@ -10,10 +11,7 @@ const isInPostPage = Astro.url.pathname.includes("post")
 ---
 
 <div class="header">
-  <p class="info">{frontmatter.publishedAt.toDateString()}</p>
-  <h1 class="title">
-    <a href={`post/${entry.slug}`}>{frontmatter.title}</a>
-  </h1>
+  <p class="info">{DateUtility.format(frontmatter.publishedAt)}</p>
   {isInPostPage ? (
     <h1 class="title">{frontmatter.title}</h1>
   ) : (
