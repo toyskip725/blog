@@ -25,6 +25,14 @@ const title = `${entry.data.title} | sumi blog`;
 <style>
   main {
     width: 70%;
+    min-width: 640px;
     padding: 1em 1em 1em 0em;
+  }
+
+  @media screen and (max-width: 640px) {
+    main {
+      width: auto;
+      min-width: 0px;
+    }
   }
 </style>
