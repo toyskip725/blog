@@ -71,4 +71,24 @@ const isInPostPage = Astro.url.pathname.includes("post")
       padding-top: 1em;
     }
   }
+
+  @media screen and (max-width: 640px) {
+    .title {
+      font-size: 1.5rem;
+    }
+    .info {
+      font-size: 0.875rem;
+    }
+    .content {
+      h1 {
+        font-size: 1.25rem;
+      }
+      p {
+        font-size: 0.875rem;
+      }
+      li {
+        font-size: 0.875rem;
+      }
+    }
+  }
 </style>
