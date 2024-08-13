@@ -11,20 +11,20 @@ interface FrontMatter {
 export class BlogPostCard extends LitElement {
   static styles = css`
     .container {
-      border-bottom: solid 1px #2a2a31;
+      border-bottom: solid 1px #34343d;
       margin: 1em 0em;
     }
     .title {
-      color: #2a2a31;
+      color: #34343d;
       font-size: large;
       margin-top: 0em;
     }
     .title a {
-      color: #2a2a31;
+      color: #34343d;
       text-decoration: none;
     }
     .published-at {
-      color: #2a2a31;
+      color: #34343d;
       font-size: small;
       margin-bottom: 0em;
     }
