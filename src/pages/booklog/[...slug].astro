@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { TopNavigation } from '../../components/TopNavigation';
+import { MainColorDivider } from '../../components/MainColorDivider';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("booklog");
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const title = `${entry.data.title} | sumi blog`;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={title}>
+  <TopNavigation />
+  <main>
+    <h1>{entry.data.title}</h1>
+    <h2>書誌情報</h2>
+    <ul>
+      <li>{entry.data.info.bibliography}</li>
+      <li><a href={entry.data.info.link} target="_blank" rel="noopener noreferrer">{entry.data.info.link}</a></li>
+    </ul>
+    <div class="divider">
+      <MainColorDivider />
+    </div>
+    <div class="markdown-content">
+      <Content />
+    </div>
+  </main>
+</BaseLayout>
+
+
+<style>
+main {
+  color: #34343d;
+}
+
+h1 {
+  font-weight: normal;
+}
+h2 {
+  font-weight: normal;
+}
+
+.divider {
+  padding-left: 10px;
+}
+
+.markdown-content {
+  hr {
+    width: 30%;
+    margin: 2em 0em;
+  }
+}
+
+</style>
