@@ -1,0 +1,1 @@
+export type Category = "booklog" | "essay";
