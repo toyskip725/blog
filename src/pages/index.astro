@@ -6,9 +6,13 @@ import { TopNavigation } from "../components/TopNavigation";
 import { BlogPostCard } from "../components/BlogPostCard";
 import { MainColorDivider } from '../components/MainColorDivider';
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { LinkCard } from '../components/LinkCard';
+import { StaticTag } from '../components/StaticTag';
 
-const collection = await getCollection('post');
-const posts = collection.reverse();
+const collection = await getCollection('booklog');
+const booklogs = collection.reverse();
+
+const tags = collection.map(post => post.data.tags).flat(1);
 ---
 
 <BaseLayout title="sumi blog">
@@ -18,12 +22,22 @@ const posts = collection.reverse();
   </div>
   <div class="wrapper">
     <main>
-      {posts.map((post) => (<BlogPostView frontmatter={post.data} entry={post} />))}
+      {booklogs.map(post => (
+        <LinkCard
+          title={post.data.title}
+          category={post.data.category}
+          url={`booklog/${post.slug}`}
+          lastUpdated={post.data.lastUpdated}
+          tags={post.data.tags} />
+      ))}
     </main>
     <aside>
-      <h1>タグ一覧</h1>
-      <h1>最新記事</h1>
-      {posts.map((post) => (<BlogPostCard href={`post/${post.slug}`} frontmatter={post.data} />))}
+      <h1>Tags</h1>
+        <div class="tags-wrapper">
+          {tags.map(tag => (<StaticTag tagName={tag} size="normal" />))}
+        </div>
+      <h1>Links</h1>
+        <a href="https://toyskip725.github.io/">sumi website</a>
     </aside>
   </div>
 </BaseLayout>
@@ -32,11 +46,13 @@ const posts = collection.reverse();
 main {
   width: 70%;
   min-width: 640px;
-  padding: 1em 1em 1em 0em;
+  padding: 2em 1em 1em 0em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 aside {
   width: 30%;
-  padding: 1.5em 1em 1em 1em;
+  padding: 1em 1em 1em 1em;
 }
 
 h1 {
@@ -51,11 +67,16 @@ h1 {
 .divider {
   padding-left: 10px;
 }
+.tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
 
 @media screen and (max-width: 640px) {
   main {
     width: 100%;
     min-width: 0px;
+    grid-template-columns: 1fr;
   }
   aside {
     display: none;
