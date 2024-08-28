@@ -17,6 +17,9 @@ export class LinkCard extends LitElement {
       position: relative;
       margin: 0.5em;
     }
+    .category-wrapper {
+      padding: 1em 1em 0em 1em;
+    }
     .tag-wrapper {
       display: flex;
       padding: 0em 1em;
@@ -47,7 +50,9 @@ export class LinkCard extends LitElement {
 
     return html`
       <div class="link-card-wrapper">
-        <category-label category=${this.category}></category-label>
+        <div class="category-wrapper">
+          <category-label category=${this.category} size="small"></category-label>
+        </div>
         <a href=${this.url} class="link-card">
           <p class="link-card-title">${this.title}</p>
         </a>
