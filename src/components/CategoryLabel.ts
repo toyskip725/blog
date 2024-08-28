@@ -1,36 +1,37 @@
-import {LitElement, html} from 'lit';
+import {LitElement, html, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import type { Category } from '../utils/category';
+import type { Size } from '../utils/size';
 
 @customElement('category-label')
 export class CategoryLabel extends LitElement {
-  @property() category: Category = "booklog";
-
-  private renderColor() {
-    switch(this.category) {
-      case "booklog":
-        return "#0a214f";
-      case "essay":
-        return "#007989";
+  static styles = css`
+    .label {
+      width: fit-content;
+      color: #fafafa;
+      padding: 0.25em 0.75em;
     }
-  }
+    .normal {
+      font-size: 0.875rem;
+    }
+    .small {
+      font-size: 0.75rem;
+    }
+    .booklog {
+      background-color: #0a214f;
+    }
+    .essay {
+      background-color: #007989;
+    }
+  `;
+  @property() category: Category = "booklog";
+  @property() size: Size = "normal";
 
   render() {
-    const wrapperStyle = {
-      "padding": "1em 1em 0em 1em",
-    };
-    const labelStyle = {
-      "width": "fit-content",
-      "color": "#fafafa",
-      "background-color": this.renderColor(),
-      "font-size": "0.75rem",
-      "padding": "0.25em 0.75em",
-    };
-
     return html`
-      <div style=${styleMap(wrapperStyle)}>
-        <p style=${styleMap(labelStyle)}>${this.category}</p>
+      <div>
+        <p class="label ${this.category} ${this.size}">${this.category}</p>
       </div>
     `;
   }
