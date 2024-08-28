@@ -1,0 +1,117 @@
+---
+// @ts-nocheck
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { TopNavigation } from '../../components/TopNavigation';
+import { MainColorDivider } from '../../components/MainColorDivider';
+import { CategoryLabel } from '../../components/CategoryLabel';
+import { StaticTag } from '../../components/StaticTag';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("booklog");
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const title = `${entry.data.title} | sumi blog`;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={title}>
+  <TopNavigation />
+  <main>
+    <div class="category-wrapper">
+      <CategoryLabel category={entry.data.category} size="normal" />
+    </div>
+    <h1>{entry.data.title}</h1>
+    <div class="info">
+      <h2>書誌情報</h2>
+      <ul>
+        <li>{entry.data.info.bibliography}</li>
+        <li><a href={entry.data.info.link} target="_blank" rel="noopener noreferrer">{entry.data.info.link}</a></li>
+      </ul>
+      <div class="tags-wrapper">
+        {entry.data.tags.map(tag => (<StaticTag tagName={tag} size="normal" />))}
+      </div>
+    </div>
+    <div class="divider">
+      <MainColorDivider />
+    </div>
+    <div class="markdown-content">
+      <Content />
+    </div>
+  </main>
+</BaseLayout>
+
+
+<style>
+main {
+  width: 70%;
+  color: #34343d;
+  margin: 0.5em;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: normal;
+}
+h2 {
+  font-size: 1.25rem;
+  font-weight: normal;
+}
+
+.divider {
+  padding: 30px 10px;
+}
+.category-wrapper {
+  padding-top: 1em;
+}
+.tags-wrapper {
+  display: flex;
+}
+.info {
+  padding: 0.25em 0em;
+}
+.markdown-content {
+  hr {
+    width: 30%;
+    margin: 2em 0em;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  main {
+    width: auto;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1rem;
+  }
+  p {
+    font-size: 0.875rem;
+  }
+  li {
+    font-size: 0.875rem;
+  }
+  .markdown-content {
+    h1 {
+    font-size: 1.5rem;
+    }
+    h2 {
+      font-size: 1rem;
+    }
+    p {
+      font-size: 0.875rem;
+    }
+    li {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+</style>
