@@ -1,0 +1,33 @@
+.post-preview-wrapper {
+  padding: 20px 0px;
+}
+.post-preview-header {
+  align-items: center;
+}
+.post-preview-header-published-at {
+  color: #2a2a31;
+}
+.post-preview-header-tags {
+  display: flex;
+  margin-left: auto;
+}
+.post-preview-link {
+  font-size: 1.25rem;
+  color: #2a2a31;
+  text-decoration: none;
+}
+.post-preview-body {
+  color: #2a2a31;
+}
+
+@media screen and (max-width: 640px) {
+  .post-preview-header-published-at {
+    font-size: 0.875rem;
+  }
+  .post-preview-link {
+    font-size: 1rem;
+  }
+  .post-preview-body {
+    font-size: 0.875rem;
+  }
+}
