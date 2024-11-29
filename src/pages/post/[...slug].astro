@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostTag from '../../components/PostTag';
+import { WebsiteTitle } from '../../utils/constants';
+import { DateUtility } from '../../utils/date';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('post');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title=`${entry.data.title} | ${WebsiteTitle}`>
+  <main>
+    <div class="post-wrapper">
+      <div class="post-header">
+        <p class="post-published-at">{DateUtility.format(entry.data.publishedAt)}</p>
+        <h1 class="post-title">{entry.data.title}</h1>
+        <div class="tag-wrapper">
+        {entry.data.tags.map(tag => <PostTag tagName={tag} />)}
+        </div>
+      </div>
+      <div class="post-content">
+        <Content />
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    width: 70%;
+    min-width: 640px;
+    padding: 20px 10px 10px 10px;
+    box-sizing: border-box;
+  }
+  .post-header {
+    padding: 30px 0px;
+  }
+  .post-title {
+    color: #2a2a31;
+    font-weight: normal;
+    margin-block-start: 0px;
+  }
+  .post-published-at {
+    color: #2a2a31;
+  }
+  .post-content {
+    color: #2a2a31;
+    padding: 10px 0px;
+
+    h1 {
+      font-weight: normal;
+    }
+    h2 {
+      font-weight: normal;
+    }
+    p {
+      font-size: medium;
+    }
+  }
+  .tag-wrapper {
+    display: flex;
+  }
+
+  @media screen and (max-width: 640px) {
+    main {
+      width: 100%;
+      min-width: auto;
+    }
+
+    .post-title {
+      font-size: 1.75rem;
+    }
+    .post-published-at {
+      font-size: 0.875rem;
+    }
+    .post-header {
+      padding: 20px 0px;
+    }
+    .post-content {
+      p {
+        font-size: 0.875rem;
+      }
+    }
+  }
+</style>
