@@ -1,10 +1,29 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PostPreviewCard from '../components/PostPreviewCard';
+
+const posts = await getCollection("post");
 ---
 
 <BaseLayout title="sumi blog">
 	<main>
-		Hello Astro!
+	{posts.map(post => (<PostPreviewCard post={post.data} slug={post.slug} body={post.body} />))}
 	</main>
 </BaseLayout>
 
+<style>
+main {
+  width: 70%;
+  min-width: 640px;
+  padding: 20px 10px 10px 10px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 640px) {
+  main {
+    width: 100%;
+    min-width: auto;
+  }
+}
+</style>
