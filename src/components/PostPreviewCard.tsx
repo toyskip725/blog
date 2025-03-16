@@ -21,7 +21,7 @@ const PostPreviewCard = ({ post, slug, body }: Props) => {
           <p>{post.title}</p>
         </a>
       </div>
-      <p class="post-preview-body">{bodyPreview}</p>
+      {/*<p class="post-preview-body">{bodyPreview}</p> */}
       <div class="post-preview-header-tags">
         {post.tags.map(tag => <PostTag tagName={tag} />)}
       </div>
