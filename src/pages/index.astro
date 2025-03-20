@@ -2,14 +2,20 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostPreviewCard from '../components/PostPreviewCard';
+import ProfileCard from '../components/ProfileCard';
 
 const collection = await getCollection("post");
-const posts = collection.reverse();
+const posts = collection
+  .filter((element) => element.data.visible) 
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 ---
 
 <BaseLayout title="sumi blog">
 	<main>
 	{posts.map(post => (<PostPreviewCard post={post.data} slug={post.slug} body={post.body} />))}
+  <div class="profile">
+    <ProfileCard />
+  </div>
 	</main>
 </BaseLayout>
 
@@ -19,6 +25,10 @@ main {
   min-width: 640px;
   padding: 20px 10px 10px 10px;
   box-sizing: border-box;
+}
+
+.profile {
+  margin: 5em 0em;
 }
 
 @media screen and (max-width: 640px) {
