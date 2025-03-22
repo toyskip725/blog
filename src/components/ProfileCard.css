@@ -1,6 +1,6 @@
 .card-container {
-  max-width: 400px;
-  border: 1px solid #2a2a31;
+  max-width: 480px;
+  border-top: 1px solid #2a2a31;
   padding: 1em;
   display: flex;
   align-items: start;
@@ -43,10 +43,16 @@
 .profile-card-link-header {
   margin-right: 1em;
 }
+.profile-card-link-button {
+  display: none;
+  border: 1px solid #2a2a31;
+  padding: 0em 0.75em;
+  margin-right: 1em;
+}
 
 @media screen and (max-width: 640px)  {
   .card-container {
-    max-width: 320px;
+    border: none;
     padding: 0.75em;
   }
   
@@ -59,10 +65,21 @@
     font-size: 0.5em;
   }
   .profile-card-name {
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
   
   .profile-card-link {
-    font-size: 0.5em;
-  }  
+    display: none;
+  }
+  .profile-card-link-list {
+    display: flex;
+  }
+  .profile-card-link-button {
+    display: block;
+  }
+  .profile-card-link-button-text {
+    color: #2a2a31;
+    font-size: 0.84em;
+    text-decoration: none;
+  }
 }
